@@ -67,6 +67,7 @@ class SG_Form{
 			case 'email':
 			case 'color':
 			case 'password':
+			default:
 				$field_attr['value'] = $value;
 				$param_attr = self::inlineAttr($field_attr);
 				$param_attr .= ($event_attr) ? ' '.$event_attr : '';
