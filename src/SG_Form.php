@@ -65,8 +65,8 @@ class SG_Form{
 			
 			case 'text':
 			case 'email':
-			case 'color':
 			case 'password':
+			default:
 				$field_attr['value'] = $value;
 				$param_attr = self::inlineAttr($field_attr);
 				$param_attr .= ($event_attr) ? ' '.$event_attr : '';
@@ -142,12 +142,14 @@ class SG_Form{
 			
 			case 'radio':  				
 				foreach ($field_options as $option) { 
-					$this_id = $field_id.'-'.SG_Util::slug($option['value']);
 					$this_checked = self::checkedInput($value, $option['value']);
 					$this_class = SG_Util::val($field_attr,'class');
+					
+					$field_attr['id'] = $field_id.'-'.SG_Util::slug($option['value']);
+					$field_attr['value'] = $option['value'];
+					
 					$option['value'] = (isset($option['value'])) ? $option['value'] : $option['label'];
 					
-					$field_attr['value'] = $option['value'];
 					$param_attr = $field_attr;
 					$param_attr = SG_Util::setNull($param_attr,'id');
 					$param_attr = SG_Util::setNull($param_attr,'class');
@@ -165,9 +167,10 @@ class SG_Form{
 			case 'checkbox':
 				if(!is_array($field_options)){
 					$field_options = array(
-						array('label'=>'true', 'value'=>'true')
+						array('label'=>'true', 'value'=>1)
 					);
 				}
+
 				foreach ($field_options as $option) { 
 					$this_id = $field_id.'-'.SG_Util::slug($option['value']);
 					$this_checked = self::checkedInput($value, $option['value']);
